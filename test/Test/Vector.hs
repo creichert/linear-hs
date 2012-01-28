@@ -25,7 +25,7 @@ import Numeric.Vector ( Vector(..)
                       , angle
                       , cross
                       , perpindicular
-                      , parallel )
+                      , (//), parallel )
 
 
 --------------------------------- HUnit Tests --------------------------------
@@ -89,6 +89,7 @@ utests_Vector = TestList [ TestLabel "test angle1" test_angle1
                          , TestLabel "test parallel4" test_parallel4
                          , TestLabel "test parallel5" test_parallel5
                          , TestLabel "test parallel6" test_parallel6
+                         , TestLabel "test parallel7" test_parallel7
                          ]
 
 

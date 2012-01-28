@@ -9,6 +9,7 @@ cabal-version: >= 1.2.3
 
 Library
     hs-source-dirs: src
+    extensions: NoMonomorphismRestriction
     exposed-modules: Numeric.Vector,
                      Numeric.Matrix,
                      Math.LinearAlgebra
@@ -17,6 +18,7 @@ Library
 Executable linear-hs-tests
     hs-source-dirs: src, test
     main-is: Main.hs
+    extensions: NoMonomorphismRestriction
     other-modules: Test.Vector,
                    Numeric.Vector,
                    Math.LinearAlgebra

@@ -94,7 +94,7 @@ normalize :: (Real a, Floating a) => Vector a -> Vector a
 normalize v = multScalar (recip $ magnitude v) v
 
 -- | Take the cross product of a 2 or 2 dimensional 'Vector'
-cross :: (Num a, Fractional a) => Vector a -> Vector a -> Vector a
+cross :: (Num a) => Vector a -> Vector a -> Vector a
 cross (Vector n xs) (Vector m ys)
         | n == 3 && m == 3 = cross3D' (Vector n xs) (Vector m ys)
         | n == 2 && m == 2 = cross2D' (Vector n xs) (Vector m ys)
@@ -107,16 +107,16 @@ cross3D' (Vector _ xs) (Vector _ ys) = mkVector [ xs!!1 * ys!!2 - xs!!2 * ys!!1,
                                             head xs * ys!!1 - xs!!1 * head ys]
 
 -- internal cross product of 2D vector.
-cross2D' :: (Num a, Fractional a) => Vector a -> Vector a -> Vector a
+cross2D' :: (Num a) => Vector a -> Vector a -> Vector a
 cross2D' (Vector _ xs) (Vector _ ys) = mkVector [0,0, crossLists]
     where crossLists = head xs * ys!!1 - xs!!1 * head ys
 
 -- | Determine whether two vectors are parallel.
-(//) :: (Num a, Fractional a) => Vector a -> Vector a -> Bool
+(//) :: (Num a) => Vector a -> Vector a -> Bool
 v // w = parallel v w
 
 -- | Determine whether two vectors are parallel. See '(//)'.
-parallel :: (Num a, Fractional a) => Vector a -> Vector a -> Bool
+parallel :: (Num a) => Vector a -> Vector a -> Bool
 parallel v w = v `cross` w == Vector dim [0,0,0]
     where dim = max (dimensions v) (dimensions w)
 
