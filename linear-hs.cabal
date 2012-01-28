@@ -1,0 +1,23 @@
+name: linear-hs
+version: 0.1
+synopsis: A linear algebra library.
+category: Math
+build-type: Simple
+maintainer: Christopher Reichert <creichert07@gmail.com>
+cabal-version: >= 1.2.3
+
+
+Library
+    hs-source-dirs: src
+    exposed-modules: Numeric.Vector,
+                     Numeric.Matrix,
+                     Math.LinearAlgebra
+    build-depends: base
+
+Executable linear-hs-tests
+    hs-source-dirs: src, test
+    main-is: Main.hs
+    other-modules: Test.Vector,
+                   Numeric.Vector,
+                   Math.LinearAlgebra
+    build-depends: base, QuickCheck >= 2.1, HUnit
