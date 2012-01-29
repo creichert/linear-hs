@@ -53,10 +53,8 @@ add :: (Num a) => Matrix a -> Matrix a -> Matrix a
 add a b
     | rows a == rows b && cols a == cols b = add' a b
     | otherwise        = error "Unequal number of rows and/or columns."
-
-add' :: (Num a) => Matrix a -> Matrix a -> Matrix a
-add' (Matrix r c xs) (Matrix _ _ ys) = Matrix r c (added xs ys)
-    where added (z:zs) (w:ws) = zipWith (+) z w : added zs ws
+    where add' (Matrix r c xs) (Matrix _ _ ys) = Matrix r c (added xs ys)
+          added (z:zs) (w:ws) = zipWith (+) z w : added zs ws
           added _      _      = []
 
 -- | Return the number of rows in the matrix.
