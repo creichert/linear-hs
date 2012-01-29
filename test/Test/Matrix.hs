@@ -13,7 +13,8 @@ module Test.Matrix where
 
 import Test.HUnit
 
-import Numeric.Matrix (Matrix(..), mkMatrix, add, rows, cols)
+import Numeric.Matrix (Matrix(..), mkMatrix, add, rows, cols
+                      , (-), subtract)
 
 ------------------------ HUnit Tests ---------------------------------------
 test_make1 = "matrix make 1" ~: mkMatrix xs ~=? Matrix 3 3 xs
@@ -42,6 +43,26 @@ test_rows2 = "test rows 1" ~: 2 ~=? rows a
 test_cols2 = "test cols 1" ~: 2 ~=? cols a
     where a = mkMatrix [[1,2],[1,2]]
 
+test_subtract1 = "test subtract 1" ~: c ~=? a - b
+    where a = mkMatrix [[1,2,3],[1,2,3],[1,2,3]]
+          b = mkMatrix [[1,1,1],[1,1,1],[1,1,1]]
+          c = Matrix 3 3 [[0,1,2],[0,1,2],[0,1,2]]
+
+test_subtract2 = "test subtract 2" ~: c ~=? a - b
+    where a = mkMatrix [[1.2,2.5,3.8],[1.45,2.14,3.34],[1.87,2.99,3.123]]
+          b = mkMatrix [[1.1,1.4,1.38],[1,3,5.435],[-30,-20.123,0]]
+          c = Matrix 3 3 [[9.999999999999987e-2,1.1,2.42],
+                          [0.44999999999999996,
+                          -0.8599999999999999,
+                          -2.0949999999999998],
+                          [31.87,23.113,3.123]]
+
+test_subtract3 = "test subtract 3" ~: c ~=? a - b
+    where a = mkMatrix [[1,2],[1,2]]
+          b = mkMatrix [[1,1],[1,5]]
+          c = Matrix 2 2 [[0,1],[0,-3]]
+
+
 utests_Matrix = TestList [ TestLabel "matrix make 1" test_make1
                          , TestLabel "matrix make 2" test_make2
                          , TestLabel "matrix add 2" test_add1
@@ -50,5 +71,8 @@ utests_Matrix = TestList [ TestLabel "matrix make 1" test_make1
                          , TestLabel "test cols 1" test_cols1
                          , TestLabel "test rows 2" test_rows2
                          , TestLabel "test cols 2" test_cols2
+                         , TestLabel "test subtract 1" test_subtract1
+                         , TestLabel "test subtract 2" test_subtract2
+                         , TestLabel "test subtract 3" test_subtract3
                          ]
 

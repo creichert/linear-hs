@@ -12,14 +12,18 @@
 ---- It can be assumed that these operations are undefined for matrices
 ---- of unequal length.
 
-
 module Numeric.Matrix(
         Matrix(..)
       , mkMatrix
       , add
       , rows
       , cols
+      , (-), subtract
+      , negate
       ) where
+
+import Prelude hiding (subtract, negate)
+import qualified Prelude as P (negate)
 
 import Data.List
 
@@ -31,7 +35,7 @@ instance Eq a => Eq (Matrix a) where
 
 instance (Num a) => Num (Matrix a) where
     (+)         = add
-    (-)         = error "Undefined operation for matrices."
+    (-)         = subtract
     (*)         = error "Undefined operation for matrices."
     abs         = error "Undefined operation for matrices."
     signum      = error "Undefined operation for matrices."
@@ -64,4 +68,14 @@ rows (Matrix n _ _) = n
 -- | Return the number of columns in the matrix.
 cols :: Matrix a -> Int
 cols (Matrix _ m _) = m
+
+-- | Matrix subtraction.
+subtract :: (Num a) => Matrix a -> Matrix a -> Matrix a
+subtract a b = a + (negate b)
+
+-- | Negate all elements in a matrix.
+negate :: (Num a) => Matrix a -> Matrix a
+negate (Matrix n m xs) = Matrix n m (neg xs)
+    where neg (y:ys) = map P.negate y : neg ys 
+          neg _      = []
 
