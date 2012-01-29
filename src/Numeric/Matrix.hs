@@ -9,14 +9,19 @@
 ----
 ---- Matrix
 ----
----- It can be assumed that these operations are undefined for Vectors
+---- It can be assumed that these operations are undefined for matrices
 ---- of unequal length.
 
 
 module Numeric.Matrix(
         Matrix(..)
       , mkMatrix
+      , add
+      , rows
+      , cols
       ) where
+
+import Data.List
 
 data Matrix a = Matrix Int Int [[a]]
     deriving (Show)
@@ -25,7 +30,7 @@ instance Eq a => Eq (Matrix a) where
     (==) (Matrix r1 c1 xs) (Matrix r2 c2 ys) = r1 == r2 && c1 == c2 && xs == ys
 
 instance (Num a) => Num (Matrix a) where
-    (+)         = error "Undefined operation for matrices"
+    (+)         = add
     (-)         = error "Undefined operation for matrices."
     (*)         = error "Undefined operation for matrices."
     abs         = error "Undefined operation for matrices."
@@ -35,7 +40,30 @@ instance (Num a) => Num (Matrix a) where
 -- | Create a new matrix from a list of lists of Int.
 mkMatrix :: (Num a) => [[a]] -> Matrix a
 mkMatrix [] = Matrix 0    0    [[0]]
-mkMatrix xs = Matrix rows cols xs
-    where rows = length xs
-          cols = length $ head xs
+mkMatrix xs =
+    if consistent xs
+    then Matrix rows' cols' xs
+    else error "Inconsistent matrix data. Check your row/column sizes match."
+    where rows' = length xs
+          cols' = length $ head xs
+          consistent ys = length (nub $ map (length) ys) == 1
+
+-- | Matrix addition.
+add :: (Num a) => Matrix a -> Matrix a -> Matrix a
+add a b
+    | rows a == rows b && cols a == cols b = add' a b
+    | otherwise        = error "Unequal number of rows and/or columns."
+
+add' :: (Num a) => Matrix a -> Matrix a -> Matrix a
+add' (Matrix r c xs) (Matrix _ _ ys) = Matrix r c (added xs ys)
+    where added (z:zs) (w:ws) = zipWith (+) z w : added zs ws
+          added _      _      = []
+
+-- | Return the number of rows in the matrix.
+rows :: Matrix a -> Int
+rows (Matrix n _ _) = n
+
+-- | Return the number of columns in the matrix.
+cols :: Matrix a -> Int
+cols (Matrix _ m _) = m
 

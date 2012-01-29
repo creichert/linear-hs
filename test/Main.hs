@@ -21,8 +21,6 @@ main = do putStrLn "Running vector quick tests."
           putStrLn "Running vector unit tests."
           runTestTT utests_Vector
 
-          putStrLn "Running matrix quick tests."
-          mapM_ (\(s,a) -> printf "%-25s: " s >> a) qtests_Matrix
           putStrLn "Running vector unit tests."
           runTestTT utests_Matrix
 
