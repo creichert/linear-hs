@@ -20,6 +20,7 @@ module Numeric.Matrix(
       , cols
       , (-), subtract
       , negate
+      , (*), multiply
       ) where
 
 import Prelude hiding (subtract, negate)
@@ -36,7 +37,7 @@ instance Eq a => Eq (Matrix a) where
 instance (Num a) => Num (Matrix a) where
     (+)         = add
     (-)         = subtract
-    (*)         = error "Undefined operation for matrices."
+    (*)         = multiply
     abs         = error "Undefined operation for matrices."
     signum      = error "Undefined operation for matrices."
     fromInteger = error "Undefined operation for matrices."
@@ -78,4 +79,13 @@ negate :: (Num a) => Matrix a -> Matrix a
 negate (Matrix n m xs) = Matrix n m (neg xs)
     where neg (y:ys) = map P.negate y : neg ys 
           neg _      = []
+
+-- | Multiply two matrices.
+multiply :: (Num a) => Matrix a -> Matrix a -> Matrix a
+multiply a b
+    | cols a == rows b = multiply' a b
+    | otherwise        = error "column/row mismatch when multiplying matrices."
+    where multiply' (Matrix r c xs) (Matrix _ _ ys) = Matrix r c (mult xs ys)
+          mult (x:xs) (y:ys) = zipWith (*) x y : mult xs ys
+          mult _      _      = []
 
