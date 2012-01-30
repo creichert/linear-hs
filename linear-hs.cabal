@@ -1,6 +1,7 @@
 name: linear-hs
 version: 0.1
 license: BSD3
+license-file: COPYING
 synopsis: A linear algebra library.
 category: Math
 build-type: Simple
