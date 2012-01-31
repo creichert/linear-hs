@@ -63,24 +63,10 @@ test_subtract3 = "test subtract 3" ~: c ~=? a - b
           c = Matrix 2 2 [[0,1],[0,-3]]
 
 test_multiply1 = "test multiply 1" ~: c ~=? a * b
-    where a = mkMatrix [[1,2,3], [1,2,3], [1,2,3]]
-          b = mkMatrix [[1,2,3], [1,2,3], [1,2,3]]
-          c = mkMatrix [[1,4,9], [1,4,9], [1,4,9]]
+    where a = mkMatrix [[1,2], [3,4]]
+          b = mkMatrix [[5,0], [0,2]]
+          c = mkMatrix [[5,4],[15,8]]
 
-test_multiply2 = "test multiply 2" ~: c ~=? a * b
-    where a = mkMatrix [[2.14,3.45,78.292], [23.123,1232.1,1232.12], [1.1,8,9]]
-          b = mkMatrix [[5.54,12.45,8.298], [1546.123,12.1,12], [3.4,8,22]]
-          c = mkMatrix [[11.8556,42.9525,649.667016],
-                        [35751.002129,14908.409999999998,14785.439999999999],
-                        [3.74,64.0,198.0]]
-
-test_multiply3 = "test multiply 3" ~: c ~=? a * a
-    where a = mkMatrix [[(1/2),(2/3),(3/4)],
-                        [(1/2),(2/3),(3/4)],
-                        [(1/2),(2/3),(3/4)]]
-          c = mkMatrix [[(1/4),(4/9),(9/16)],
-                        [(1/4),(4/9),(9/16)],
-                        [(1/4),(4/9),(9/16)]]
 
 utests_Matrix = TestList [ TestLabel "matrix make 1" test_make1
                          , TestLabel "matrix make 2" test_make2
@@ -94,6 +80,5 @@ utests_Matrix = TestList [ TestLabel "matrix make 1" test_make1
                          , TestLabel "test subtract 2" test_subtract2
                          , TestLabel "test subtract 3" test_subtract3
                          , TestLabel "test mult 1" test_multiply1
-                         , TestLabel "test mult 3" test_multiply3
                          ]
 

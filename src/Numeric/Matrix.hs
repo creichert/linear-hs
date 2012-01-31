@@ -85,7 +85,10 @@ multiply :: (Num a) => Matrix a -> Matrix a -> Matrix a
 multiply a b
     | cols a == rows b = multiply' a b
     | otherwise        = error "column/row mismatch when multiplying matrices."
-    where multiply' (Matrix r c xs) (Matrix _ _ ys) = Matrix r c (mult xs ys)
-          mult (x:xs) (y:ys) = zipWith (*) x y : mult xs ys
-          mult _      _      = []
+    where multiply' (Matrix r c xs) (Matrix _ _ ys) =
+                                            Matrix r c (mult xs (transpose ys))
+          mult (x:xs) ys = dotall x ys : mult xs ys
+          mult _     _   = []
+          dotall x (y:ys) = sum (zipWith (*) x y) : dotall x ys
+          dotall _  _     = []
 
