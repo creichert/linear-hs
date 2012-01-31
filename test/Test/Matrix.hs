@@ -14,7 +14,7 @@ module Test.Matrix where
 import Test.HUnit
 
 import Numeric.Matrix (Matrix(..), mkMatrix, add, rows, cols,
-                       (-), (*))
+                       (-), (*), square)
 
 ------------------------ HUnit Tests ---------------------------------------
 test_make1 = "matrix make 1" ~: mkMatrix xs ~=? Matrix 3 3 xs
@@ -67,6 +67,12 @@ test_multiply1 = "test multiply 1" ~: c ~=? a * b
           b = mkMatrix [[5,0], [0,2]]
           c = mkMatrix [[5,4],[15,8]]
 
+test_square1 = "test square 1" ~: True ~=? square a
+    where a = mkMatrix [[1,2],[1,2]]
+test_square2 = "test square 2" ~: False ~=? square a
+    where a = mkMatrix [[1,2],[1,2], [1,2]]
+test_square3 = "test square 3" ~: True ~=? square a
+    where a = mkMatrix [[1,2,3],[1,2,3],[1,2,3]]
 
 utests_Matrix = TestList [ TestLabel "matrix make 1" test_make1
                          , TestLabel "matrix make 2" test_make2
@@ -80,5 +86,8 @@ utests_Matrix = TestList [ TestLabel "matrix make 1" test_make1
                          , TestLabel "test subtract 2" test_subtract2
                          , TestLabel "test subtract 3" test_subtract3
                          , TestLabel "test mult 1" test_multiply1
+                         , TestLabel "test square 1" test_square1
+                         , TestLabel "test square 2" test_square2
+                         , TestLabel "test square 3" test_square3
                          ]
 

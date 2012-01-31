@@ -21,6 +21,7 @@ module Numeric.Matrix(
       , (-), subtract
       , negate
       , (*), multiply
+      , square
       ) where
 
 import Prelude hiding (subtract, negate)
@@ -91,4 +92,8 @@ multiply a b
           mult _     _   = []
           dotall x (y:ys) = sum (zipWith (*) x y) : dotall x ys
           dotall _  _     = []
+
+-- | Determine whether a matrix is square.
+square :: Matrix a -> Bool
+square (Matrix r c _) = r == c
 
