@@ -14,7 +14,7 @@ module Test.Matrix where
 import Test.HUnit
 
 import Numeric.Matrix (Matrix(..), mkMatrix, add, rows, cols,
-                       (-), (*), square)
+                       (-), (*), square, multScalar)
 
 ------------------------ HUnit Tests ---------------------------------------
 test_make1 = "matrix make 1" ~: mkMatrix xs ~=? Matrix 3 3 xs
@@ -74,6 +74,15 @@ test_square2 = "test square 2" ~: False ~=? square a
 test_square3 = "test square 3" ~: True ~=? square a
     where a = mkMatrix [[1,2,3],[1,2,3],[1,2,3]]
 
+test_multScalar1 = "multiply scalar 1" ~: b ~=? multScalar 4 a
+    where a = mkMatrix [[1,2,3],[1,2,3],[1,2,3]]
+          b = mkMatrix [[4,8,12],[4,8,12],[4,8,12]]
+
+test_multScalar2 = "multiply scalar 2" ~: b ~=? multScalar 6.3 a
+    where a = mkMatrix [[2.3,45.3,234.5],[123.44,12,34.5]]
+          b = Matrix 2 3 [[14.489999999999998,285.39,1477.35],
+                          [777.6719999999999,75.6,217.35]]
+
 utests_Matrix = TestList [ TestLabel "matrix make 1" test_make1
                          , TestLabel "matrix make 2" test_make2
                          , TestLabel "matrix add 2" test_add1
@@ -89,5 +98,7 @@ utests_Matrix = TestList [ TestLabel "matrix make 1" test_make1
                          , TestLabel "test square 1" test_square1
                          , TestLabel "test square 2" test_square2
                          , TestLabel "test square 3" test_square3
+                         , TestLabel "test mult scalar 1" test_multScalar1
+                         , TestLabel "test mult scalar 2" test_multScalar2
                          ]
 

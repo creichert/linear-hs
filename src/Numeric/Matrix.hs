@@ -22,6 +22,7 @@ module Numeric.Matrix(
       , negate
       , (*), multiply
       , square
+      , multScalar
       ) where
 
 import Prelude hiding (subtract, negate)
@@ -43,7 +44,7 @@ instance (Num a) => Num (Matrix a) where
     signum      = error "Undefined operation for matrices."
     fromInteger = error "Undefined operation for matrices."
 
--- | Create a new matrix from a list of lists of Int.
+-- | Create a new matrix from a list of lists.
 mkMatrix :: (Num a) => [[a]] -> Matrix a
 mkMatrix [] = Matrix 0    0    [[0]]
 mkMatrix xs =
@@ -96,4 +97,10 @@ multiply a b
 -- | Determine whether a matrix is square.
 square :: Matrix a -> Bool
 square (Matrix r c _) = r == c
+
+-- | Scalar multiplication.
+multScalar :: (Num a) => a -> Matrix a -> Matrix a
+multScalar n (Matrix r c ys) = Matrix r c (mult' n ys)
+    where mult' m (x:xs) = map (m*) x : mult' n xs
+          mult' _ _      = []
 
